@@ -149,7 +149,7 @@ must be non-empty for the call to bill.
 - Provider keys live only in Worker secrets; responses never echo them.
 - Caller keys are stored as SHA-256 hashes and shown once.
 - Admin routes need a 32+ character token, compared in constant time.
-- Anonymous mode (`OPEN_FREE=1`) reaches free tools only and is rate-limited per IP.
+- Anonymous mode (`OPEN_FREE=1`) reaches free tools only. Its per-IP limit uses the Cloudflare rate-limiting binding, which is per location and eventually consistent: it slows sustained abuse but lets short bursts through.
 
 ## License
 

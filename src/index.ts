@@ -45,7 +45,7 @@ async function metered(req: Request, env: Env, target: string, input: Record<str
     if (hasAuth) return { status: 401, body: { error: "invalid key" } };
     if (env.OPEN_FREE !== "1") return { status: 401, body: { error: "a key is required: Authorization: Bearer <key>" } };
     const ip = req.headers.get("cf-connecting-ip") ?? "anon";
-    if (env.RL && !(await env.RL.limit({ key: ip })).success) return { status: 429, body: { error: "anonymous rate limit: 30 calls a minute. Self-host for unlimited." } };
+    if (env.RL && !(await env.RL.limit({ key: ip })).success) return { status: 429, body: { error: "anonymous rate limit reached. Self-host for unlimited." } };
   }
   const budgetUsd = key ? key.balance_micro / 1e6 / (1 + markup) : 0;
   let cap = budgetUsd;

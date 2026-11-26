@@ -21,7 +21,7 @@ Base URL: ${origin}
   provider is tried (free at per-result providers, passed through where "billed" says every call). The reply is {output, cost_usd, served_by, tried}. Report cost_usd to your human.
   Header X-Max-Cost: <usd> caps one call.
 - MCP: ${origin}/mcp (streamable HTTP) with tools search_tools, get_tool, call_tool.
-${env.OPEN_FREE === "1" ? "- No key? Free tools can be called anonymously here (rate-limited).\n" : ""}
+${env.OPEN_FREE === "1" ? "- No key? Free tools can be called anonymously here (best-effort rate limit).\n" : ""}
 ## Capabilities on this deployment
 ${caps}
 
