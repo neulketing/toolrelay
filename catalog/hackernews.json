@@ -1,0 +1,19 @@
+{
+  "provider": "hackernews",
+  "name": "Hacker News (Algolia)",
+  "docs": "https://hn.algolia.com/api",
+  "auth": null,
+  "endpoints": [
+    {
+      "id": "hackernews.search",
+      "capability": "news.search",
+      "summary": "Search Hacker News stories and comments",
+      "method": "GET",
+      "url": "https://hn.algolia.com/api/v1/search",
+      "params": { "query": { "required": true, "in": "query" }, "tags": { "in": "query" } },
+      "price_usd": 0,
+      "hit": "hits.0",
+      "example": { "query": "mcp server" }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "provider": "openmeteo",
+  "name": "Open-Meteo",
+  "docs": "https://open-meteo.com/en/docs",
+  "auth": null,
+  "endpoints": [
+    {
+      "id": "openmeteo.current",
+      "capability": "weather.current",
+      "summary": "Current weather at a latitude and longitude",
+      "method": "GET",
+      "url": "https://api.open-meteo.com/v1/forecast",
+      "params": { "latitude": { "required": true, "in": "query" }, "longitude": { "required": true, "in": "query" }, "current": { "in": "query", "default": "temperature_2m,wind_speed_10m,weather_code" } },
+      "price_usd": 0,
+      "hit": "current",
+      "example": { "latitude": 37.57, "longitude": 126.98 }
+    }
+  ]
+}

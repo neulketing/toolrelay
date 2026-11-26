@@ -1,0 +1,54 @@
+{
+  "provider": "typesafe",
+  "name": "TypeSafe Jev",
+  "docs": "https://docs.typesafe.ai",
+  "auth": {
+    "type": "header",
+    "name": "Authorization",
+    "template": "Bearer {key}",
+    "secret": "TYPESAFE_API_KEY"
+  },
+  "endpoints": [
+    {
+      "id": "typesafe.jev.decide",
+      "capability": "ai.judge",
+      "summary": "Typed judgment (choice / yes-no / score) over evidence, as calibrated probabilities - a judge, not a writer",
+      "method": "POST",
+      "url": "https://api.typesafe.ai/v1/systemone",
+      "params": {
+        "state": {
+          "required": true,
+          "in": "body"
+        },
+        "questions": {
+          "required": true,
+          "in": "body"
+        },
+        "model": {
+          "in": "body",
+          "default": "jev-latest"
+        }
+      },
+      "price_usd": 0.0005,
+      "cost": {
+        "path": "usage.input_tokens",
+        "usd_per_unit": 4.2e-08
+      },
+      "hit": "answers",
+      "example": {
+        "state": "<text>The sky is blue today.</text>",
+        "questions": {
+          "sky": {
+            "type": "noul",
+            "instructions": "Does <text> say the sky is blue?",
+            "criteria": {
+              "true": "yes",
+              "false": "no"
+            }
+          }
+        }
+      },
+      "bill": "call"
+    }
+  ]
+}

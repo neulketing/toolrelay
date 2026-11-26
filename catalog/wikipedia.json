@@ -1,0 +1,20 @@
+{
+  "provider": "wikipedia",
+  "name": "Wikipedia",
+  "docs": "https://en.wikipedia.org/api/rest_v1/",
+  "auth": null,
+  "headers": { "User-Agent": "toolrelay (https://github.com/neulketing/toolrelay)" },
+  "endpoints": [
+    {
+      "id": "wikipedia.summary",
+      "capability": "knowledge.summary",
+      "summary": "The lead summary of a Wikipedia article",
+      "method": "GET",
+      "url": "https://{lang}.wikipedia.org/api/rest_v1/page/summary/{title}",
+      "params": { "title": { "required": true, "in": "path" }, "lang": { "in": "path", "default": "en" } },
+      "price_usd": 0,
+      "hit": "extract",
+      "example": { "title": "Cloudflare" }
+    }
+  ]
+}

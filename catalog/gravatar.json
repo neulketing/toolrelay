@@ -1,0 +1,19 @@
+{
+  "provider": "gravatar",
+  "name": "Gravatar",
+  "docs": "https://docs.gravatar.com/api/profiles/rest-api/",
+  "auth": { "type": "header", "name": "Authorization", "template": "Bearer {key}", "secret": "GRAVATAR_API_KEY", "optional": true },
+  "endpoints": [
+    {
+      "id": "gravatar.profile.from_email",
+      "capability": "people.profile.from_email",
+      "summary": "Public profile behind an email: name, photo, bio, location, linked accounts",
+      "method": "GET",
+      "url": "https://api.gravatar.com/v3/profiles/{hash}",
+      "params": { "email": { "required": true, "to": "hash", "in": "path", "transform": "sha256_email" } },
+      "price_usd": 0,
+      "hit": "display_name",
+      "example": { "email": "beau@dentedreality.com.au" }
+    }
+  ]
+}

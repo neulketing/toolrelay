@@ -1,0 +1,20 @@
+{
+  "name": "toolrelay",
+  "version": "0.1.0",
+  "description": "One key, every tool your agent needs. Open-source tool gateway on Cloudflare Workers, with MCP.",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-catalog.mjs",
+    "setup": "node scripts/setup.mjs",
+    "dev": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "deploy:demo": "npm run build && wrangler deploy -c wrangler.demo.jsonc",
+    "test": "npm run build && node --test test/"
+  },
+  "devDependencies": {
+    "wrangler": "^4.155.0",
+    "@cloudflare/workers-types": "^4.20260901.0"
+  }
+}

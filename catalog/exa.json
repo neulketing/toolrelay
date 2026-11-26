@@ -1,0 +1,36 @@
+{
+  "provider": "exa",
+  "name": "Exa",
+  "docs": "https://docs.exa.ai/reference/search",
+  "auth": {
+    "type": "header",
+    "name": "x-api-key",
+    "template": "{key}",
+    "secret": "EXA_API_KEY"
+  },
+  "endpoints": [
+    {
+      "id": "exa.search",
+      "capability": "web.search",
+      "summary": "Neural web search with page contents",
+      "method": "POST",
+      "url": "https://api.exa.ai/search",
+      "params": {
+        "query": {
+          "required": true,
+          "in": "body"
+        },
+        "numResults": {
+          "in": "body",
+          "default": 10
+        }
+      },
+      "price_usd": 0.005,
+      "hit": "results.0",
+      "example": {
+        "query": "edge-native agent tool gateways"
+      },
+      "bill": "call"
+    }
+  ]
+}

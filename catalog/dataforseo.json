@@ -1,0 +1,82 @@
+{
+  "provider": "dataforseo",
+  "name": "DataForSEO",
+  "docs": "https://docs.dataforseo.com/v3/serp/google/organic/live/advanced/",
+  "auth": {
+    "type": "basic",
+    "user_secret": "DATAFORSEO_LOGIN",
+    "pass_secret": "DATAFORSEO_PASSWORD"
+  },
+  "endpoints": [
+    {
+      "id": "dataforseo.serp.google",
+      "capability": "serp.google",
+      "summary": "Live Google results for a keyword, any country and language",
+      "method": "POST",
+      "url": "https://api.dataforseo.com/v3/serp/google/organic/live/advanced",
+      "body_template": [
+        {
+          "keyword": "{keyword}",
+          "location_code": "{location_code}",
+          "language_code": "{language_code}",
+          "depth": "{depth}"
+        }
+      ],
+      "params": {
+        "keyword": {
+          "required": true
+        },
+        "location_code": {
+          "default": 2840,
+          "type": "number"
+        },
+        "language_code": {
+          "default": "en"
+        },
+        "depth": {
+          "default": 10,
+          "type": "number"
+        }
+      },
+      "price_usd": 0.002,
+      "hit": "tasks.0.result.0.items.0",
+      "example": {
+        "keyword": "agent tools api"
+      },
+      "bill": "call"
+    },
+    {
+      "id": "dataforseo.keywords.volume",
+      "capability": "keywords.volume",
+      "summary": "Google Ads monthly search volume, CPC and competition",
+      "method": "POST",
+      "url": "https://api.dataforseo.com/v3/keywords_data/google_ads/search_volume/live",
+      "body_template": [
+        {
+          "keywords": "{keywords}",
+          "location_code": "{location_code}",
+          "language_code": "{language_code}"
+        }
+      ],
+      "params": {
+        "keywords": {
+          "required": true,
+          "type": "list"
+        },
+        "location_code": {
+          "default": 2840,
+          "type": "number"
+        },
+        "language_code": {
+          "default": "en"
+        }
+      },
+      "price_usd": 0.075,
+      "hit": "tasks.0.result.0",
+      "example": {
+        "keywords": "mcp server,agent tools"
+      },
+      "bill": "call"
+    }
+  ]
+}

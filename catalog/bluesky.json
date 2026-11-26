@@ -1,0 +1,26 @@
+{
+  "provider": "bluesky",
+  "name": "Bluesky",
+  "docs": "https://docs.bsky.app/docs/api/app-bsky-actor-get-profile",
+  "auth": null,
+  "endpoints": [
+    {
+      "id": "bluesky.profile.get",
+      "capability": "social.profile.bluesky",
+      "summary": "A Bluesky account's profile and follower counts",
+      "method": "GET",
+      "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile",
+      "params": {
+        "actor": {
+          "required": true,
+          "in": "query"
+        }
+      },
+      "price_usd": 0,
+      "hit": "handle",
+      "example": {
+        "actor": "bsky.app"
+      }
+    }
+  ]
+}

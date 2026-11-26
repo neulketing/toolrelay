@@ -1,0 +1,12 @@
+{
+  // Public demo (toolrelay.azet.io): no database and no provider keys, so only free tools answer, anonymously and rate-limited.
+  "name": "toolrelay-demo",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-22",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "toolrelay.azet.io", "custom_domain": true }],
+  "vars": { "MARKUP": "0", "OPEN_FREE": "1" },
+  "ratelimits": [{ "name": "RL", "namespace_id": "7102", "simple": { "limit": 30, "period": 60 } }],
+  "observability": { "enabled": true }
+}

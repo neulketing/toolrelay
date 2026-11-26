@@ -1,0 +1,31 @@
+{
+  "provider": "github",
+  "name": "GitHub",
+  "docs": "https://docs.github.com/en/rest/users",
+  "auth": { "type": "header", "name": "Authorization", "template": "Bearer {key}", "secret": "GITHUB_TOKEN", "optional": true },
+  "headers": { "Accept": "application/vnd.github+json", "User-Agent": "toolrelay" },
+  "endpoints": [
+    {
+      "id": "github.user.get",
+      "capability": "social.profile.github",
+      "summary": "A GitHub user's public profile: name, company, blog, location, followers",
+      "method": "GET",
+      "url": "https://api.github.com/users/{username}",
+      "params": { "username": { "required": true, "in": "path" } },
+      "price_usd": 0,
+      "hit": "login",
+      "example": { "username": "torvalds" }
+    },
+    {
+      "id": "github.users.search",
+      "capability": "people.search.developers",
+      "summary": "Search GitHub users by name, email, location or language (GitHub search syntax)",
+      "method": "GET",
+      "url": "https://api.github.com/search/users",
+      "params": { "q": { "required": true, "in": "query" }, "per_page": { "in": "query" } },
+      "price_usd": 0,
+      "hit": "items.0",
+      "example": { "q": "location:seoul language:rust" }
+    }
+  ]
+}

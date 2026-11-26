@@ -1,0 +1,29 @@
+{
+  "provider": "rdap",
+  "name": "RDAP (domain registration)",
+  "docs": "https://about.rdap.org/",
+  "auth": null,
+  "endpoints": [
+    {
+      "id": "rdap.domain",
+      "capability": "company.domain.registration",
+      "summary": "Who registered a domain, when, and through which registrar",
+      "method": "GET",
+      "url": "https://rdap.org/domain/{domain}",
+      "params": {
+        "domain": {
+          "required": true,
+          "in": "path"
+        }
+      },
+      "price_usd": 0,
+      "hit": "ldhName",
+      "example": {
+        "domain": "cloudflare.com"
+      }
+    }
+  ],
+  "headers": {
+    "Accept": "application/rdap+json"
+  }
+}

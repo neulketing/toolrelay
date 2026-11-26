@@ -1,0 +1,38 @@
+{
+  "provider": "firecrawl",
+  "name": "Firecrawl",
+  "docs": "https://docs.firecrawl.dev/api-reference/endpoint/scrape",
+  "auth": {
+    "type": "header",
+    "name": "Authorization",
+    "template": "Bearer {key}",
+    "secret": "FIRECRAWL_API_KEY"
+  },
+  "endpoints": [
+    {
+      "id": "firecrawl.scrape",
+      "capability": "web.scrape",
+      "summary": "Scrape a page (JS rendered) to Markdown",
+      "method": "POST",
+      "url": "https://api.firecrawl.dev/v1/scrape",
+      "params": {
+        "url": {
+          "required": true,
+          "in": "body"
+        },
+        "formats": {
+          "in": "body",
+          "default": [
+            "markdown"
+          ]
+        }
+      },
+      "price_usd": 0.00083,
+      "hit": "data.markdown",
+      "example": {
+        "url": "https://example.com"
+      },
+      "bill": "call"
+    }
+  ]
+}

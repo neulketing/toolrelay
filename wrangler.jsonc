@@ -1,0 +1,13 @@
+{
+  // Self-host config: one Worker + one D1 database. `npm run setup` creates the database and writes its id here.
+  "name": "toolrelay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-22",
+  "vars": {
+    "MARKUP": "0",      // added on top of the provider price, e.g. "0.05" = 5%
+    "OPEN_FREE": "0"    // "1" lets callers without a key use free tools, rate-limited by IP
+  },
+  "d1_databases": [{ "binding": "DB", "database_name": "toolrelay", "database_id": "REPLACE_WITH_SETUP" }],
+  "ratelimits": [{ "name": "RL", "namespace_id": "7101", "simple": { "limit": 30, "period": 60 } }],
+  "observability": { "enabled": true }
+}

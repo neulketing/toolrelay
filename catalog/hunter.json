@@ -1,0 +1,30 @@
+{
+  "provider": "hunter",
+  "name": "Hunter",
+  "docs": "https://hunter.io/api-documentation/v2",
+  "auth": { "type": "query", "name": "api_key", "secret": "HUNTER_API_KEY" },
+  "endpoints": [
+    {
+      "id": "hunter.email.find",
+      "capability": "people.email.find",
+      "summary": "A person's work email from name + company domain",
+      "method": "GET",
+      "url": "https://api.hunter.io/v2/email-finder",
+      "params": { "domain": { "required": true, "in": "query" }, "first_name": { "required": true, "in": "query" }, "last_name": { "required": true, "in": "query" } },
+      "price_usd": 0.034,
+      "hit": "data.email",
+      "example": { "domain": "stripe.com", "first_name": "Patrick", "last_name": "Collison" }
+    },
+    {
+      "id": "hunter.email.verify",
+      "capability": "people.email.verify",
+      "summary": "Is this email deliverable?",
+      "method": "GET",
+      "url": "https://api.hunter.io/v2/email-verifier",
+      "params": { "email": { "required": true, "in": "query" } },
+      "price_usd": 0.017,
+      "hit": "data.status",
+      "example": { "email": "patrick@stripe.com" }
+    }
+  ]
+}

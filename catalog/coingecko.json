@@ -1,0 +1,19 @@
+{
+  "provider": "coingecko",
+  "name": "CoinGecko",
+  "docs": "https://docs.coingecko.com/reference/simple-price",
+  "auth": { "type": "header", "name": "x-cg-demo-api-key", "template": "{key}", "secret": "COINGECKO_API_KEY", "optional": true },
+  "endpoints": [
+    {
+      "id": "coingecko.price",
+      "capability": "crypto.price",
+      "summary": "Spot price of coins in any currency",
+      "method": "GET",
+      "url": "https://api.coingecko.com/api/v3/simple/price",
+      "params": { "ids": { "required": true, "in": "query" }, "vs_currencies": { "in": "query", "default": "usd" } },
+      "price_usd": 0,
+      "hit": "$nonempty",
+      "example": { "ids": "bitcoin,ethereum" }
+    }
+  ]
+}
