@@ -12,7 +12,7 @@
     {
       "id": "typesafe.jev.decide",
       "capability": "ai.judge",
-      "summary": "Typed judgment (choice / yes-no / score) over evidence, as calibrated probabilities - a judge, not a writer",
+      "summary": "Ask typed questions about a piece of text and get probabilities back: pick a label, answer yes/no, or place it on a scale",
       "method": "POST",
       "url": "https://api.typesafe.ai/v1/systemone",
       "params": {
@@ -36,14 +36,14 @@
       },
       "hit": "answers",
       "example": {
-        "state": "<text>The sky is blue today.</text>",
+        "state": "<review>Arrived two days late but the jacket fits perfectly.</review>",
         "questions": {
-          "sky": {
+          "happy": {
             "type": "noul",
-            "instructions": "Does <text> say the sky is blue?",
+            "instructions": "Is the customer in <review> satisfied with the product overall?",
             "criteria": {
-              "true": "yes",
-              "false": "no"
+              "true": "satisfied",
+              "false": "not satisfied"
             }
           }
         }

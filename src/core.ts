@@ -60,7 +60,7 @@ export function search(cat: Catalog, q: string, env: Env, limit = 20) {
 }
 
 export function describe(e: Endpoint, env: Env, brief = false) {
-  const base = { id: e.id, capability: e.capability, summary: e.summary, price_usd: e.price_usd, ready: credentialed(e, env) };
+  const base = { id: e.id, capability: e.capability, summary: e.summary, price_usd: e.price_usd, billed: e.bill === "call" ? "every call" : "hits only", ready: credentialed(e, env) };
   if (brief) return base;
   return { ...base, provider: e.provider_name, method: e.method, params: e.params, docs: e.docs, example: e.example, routed_as: e.capability };
 }
@@ -169,6 +169,7 @@ export function hitCostUsd(ep: Endpoint, data: unknown): number {
  * Misses cost nothing unless the provider bills every call (bill: "call"); upstream failures cost nothing; a 4xx other than 429 is the caller's request and stops the route.
  */
 export async function call(cat: Catalog, target: string, input: Record<string, unknown>, env: Env, opts: { markup: number; maxCostUsd?: number; fetcher?: typeof fetch; timeoutMs?: number }): Promise<CallResult> {
+  if (opts.maxCostUsd != null && !(opts.maxCostUsd >= 0)) throw new Error("maxCostUsd must be a number >= 0");
   const fetcher = opts.fetcher ?? fetch;
   const direct = cat.endpoints.get(target);
   const route = direct ? [direct] : [...(cat.capabilities.get(target) ?? [])].sort((a, b) => a.price_usd - b.price_usd);

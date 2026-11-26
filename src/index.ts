@@ -48,7 +48,12 @@ async function metered(req: Request, env: Env, target: string, input: Record<str
     if (env.RL && !(await env.RL.limit({ key: ip })).success) return { status: 429, body: { error: "anonymous rate limit: 30 calls a minute. Self-host for unlimited." } };
   }
   const budgetUsd = key ? key.balance_micro / 1e6 / (1 + markup) : 0;
-  const cap = maxCostHeader != null && maxCostHeader !== "" ? Math.min(Number(maxCostHeader), budgetUsd) : budgetUsd;
+  let cap = budgetUsd;
+  if (maxCostHeader != null && maxCostHeader !== "") {
+    const m = Number(maxCostHeader);
+    if (!Number.isFinite(m) || m < 0) return { status: 400, body: { error: "max cost must be a number of USD, 0 or more" } };
+    cap = Math.min(m, budgetUsd);
+  }
   const route = cat.endpoints.get(target) ? [cat.endpoints.get(target)!] : cat.capabilities.get(target) ?? [];
   if (key && cap <= 0 && route.length && route.every((e) => e.price_usd > 0)) return { status: 402, body: { error: "insufficient balance" } };
   if (!key && route.length && route.every((e) => e.price_usd > 0)) return { status: 401, body: { error: "this tool is paid: send Authorization: Bearer <key>" } };
@@ -86,7 +91,7 @@ function catalogGet(id: string, env: Env) {
 const MCP_TOOLS = [
   { name: "search_tools", description: "Find tools by the job you need done (e.g. 'email to profile', 'google serp', 'scrape url'). Returns ids, prices and whether each is ready.", inputSchema: { type: "object", properties: { query: { type: "string" } }, required: ["query"] } },
   { name: "get_tool", description: "Parameters, price and an example for a tool id, or every provider behind a capability id.", inputSchema: { type: "object", properties: { id: { type: "string" } }, required: ["id"] } },
-  { name: "call_tool", description: "Call a tool id, or a capability id to route over providers (misses cost nothing). Report cost_usd to the user.", inputSchema: { type: "object", properties: { id: { type: "string" }, params: { type: "object" }, max_cost_usd: { type: "number" } }, required: ["id"] } },
+  { name: "call_tool", description: "Call a tool id, or a capability id to route over providers. Per-result providers charge nothing on a miss. Report cost_usd to the user.", inputSchema: { type: "object", properties: { id: { type: "string" }, params: { type: "object" }, max_cost_usd: { type: "number" } }, required: ["id"] } },
 ];
 
 async function mcp(req: Request, env: Env) {

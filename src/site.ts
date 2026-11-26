@@ -9,7 +9,7 @@ export function llms(cat: Catalog, env: Env, origin: string) {
   return `# toolrelay
 
 > One key, every tool your agent needs. Open-source tool gateway on Cloudflare Workers: search a catalog
-> by the job, read the price, call it. Provider keys stay on the server; misses cost nothing.
+> by the task, see the price, run it. Provider keys stay on the server; per-result providers charge nothing for a miss.
 
 Base URL: ${origin}
 
@@ -17,8 +17,8 @@ Base URL: ${origin}
 - Search: GET ${origin}/v1/catalog?q=<the job, e.g. "email to profile">
 - Inspect: GET ${origin}/v1/catalog/<tool id or capability id>
 - Call:   POST ${origin}/v1/call/<tool id or capability id>  body = JSON params, header Authorization: Bearer <key>
-  A capability id (e.g. web.scrape) routes over every ready provider, cheapest first; a miss is free and
-  the next provider is tried. The reply is {output, cost_usd, served_by, tried}. Report cost_usd to your human.
+  A capability id (e.g. web.scrape) routes over every ready provider, cheapest first; on a miss the next
+  provider is tried (free at per-result providers, passed through where "billed" says every call). The reply is {output, cost_usd, served_by, tried}. Report cost_usd to your human.
   Header X-Max-Cost: <usd> caps one call.
 - MCP: ${origin}/mcp (streamable HTTP) with tools search_tools, get_tool, call_tool.
 ${env.OPEN_FREE === "1" ? "- No key? Free tools can be called anonymously here (rate-limited).\n" : ""}
@@ -35,7 +35,7 @@ export function landing(cat: Catalog, env: Env, origin: string) {
     .map((e) => `<tr><td><code>${esc(e.capability)}</code></td><td>${esc(e.provider_name)}</td><td>${esc(e.summary)}</td><td class="num">${e.price_usd === 0 ? "free" : "$" + e.price_usd}</td></tr>`).join("");
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>toolrelay — one key, every tool your agent needs</title>
-<meta name="description" content="Open-source tool gateway for AI agents. Search by the job, read the price, call it. Runs on your own Cloudflare in one command. MIT.">
+<meta name="description" content="Open-source tool gateway for AI agents. Name the task, see what it costs, run it. Runs on your own Cloudflare in one command. MIT.">
 <style>
 :root{--bg:#0b0b0c;--fg:#f2f2f0;--mut:#9a9a96;--line:#26262a;--acc:#ff6b2c;--card:#131316}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#fafaf8;--fg:#141414;--mut:#5f5f5a;--line:#e3e3de;--card:#fff}}
@@ -60,8 +60,8 @@ footer{margin-top:64px;color:var(--mut);font-size:14px}a{color:var(--fg)}
 </style></head><body><main>
 <div class="kick">open source · MIT · runs on Cloudflare Workers</div>
 <h1>One key.<br>Every tool your agent needs.</h1>
-<p class="lead">Your agent should not need fourteen signups to look up one person. toolrelay puts every API behind one endpoint: search by the job, read the price, call it. Provider keys never leave your server. When a provider misses, the next one is tried, and the miss costs you nothing.</p>
-<div class="cta"><a class="btn p" href="${REPO}">Star on GitHub</a><a class="btn" href="https://deploy.workers.cloudflare.com/?url=${encodeURIComponent(REPO)}">Deploy to your Cloudflare</a><a class="btn" href="/llms.txt">llms.txt</a></div>
+<p class="lead">Your agent should not need fourteen signups to look up one person. toolrelay puts every API behind one endpoint: name the task, see what it costs, run it. Provider keys never leave your server. When a provider comes back empty, the next one is tried, and per-result providers charge nothing for the miss.</p>
+<div class="cta"><a class="btn p" href="${REPO}">Star on GitHub</a><a class="btn" href="${REPO}#sixty-seconds-to-your-own">Self-host in 60s</a><a class="btn" href="/llms.txt">llms.txt</a></div>
 
 <section><h2>Try it — who is behind this email?</h2>
 <div class="demo"><input id="em" value="beau@dentedreality.com.au" aria-label="email"><button id="go">Look up</button></div>
@@ -69,7 +69,7 @@ footer{margin-top:64px;color:var(--mut);font-size:14px}a{color:var(--fg)}
 
 <section><h2>Why toolrelay</h2><div class="grid">
 <div class="card"><b>Zero servers</b><p>One Worker, one D1 table. Deploys in a minute on Cloudflare's free plan, answers from 300+ cities.</p></div>
-<div class="card"><b>Misses are free</b><p>Call a capability, not a vendor. toolrelay walks providers cheapest-first and bills only the answer.</p></div>
+<div class="card"><b>Pay for answers</b><p>Call a capability, not a vendor. toolrelay walks providers cheapest-first; per-result providers cost nothing when they miss.</p></div>
 <div class="card"><b>Keys stay home</b><p>Provider credentials are injected server-side. Your agents hold one toolrelay key, revocable in one line.</p></div>
 <div class="card"><b>Agent-native</b><p>MCP endpoint, llms.txt and plain HTTP. Claude Code, Codex, Cursor: point them at one URL.</p></div>
 <div class="card"><b>A catalog you can read</b><p>Every tool is one JSON file: URL, params, price, what counts as a hit. Add a provider with a pull request.</p></div>

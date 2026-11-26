@@ -4,8 +4,8 @@
 
 ### One key. Every tool your agent needs.
 
-**The open-source tool gateway for AI agents.** Search by the job, read the price, call it.<br>
-Provider keys stay on your server. Misses cost nothing. Runs on Cloudflare's free plan in one command.
+**The open-source tool gateway for AI agents.** Name the task, see what it costs, run it.<br>
+Provider keys stay on your server. You pay for answers. Runs on Cloudflare's free plan in one command.
 
 [**Live demo**](https://toolrelay.azet.io) · [llms.txt](https://toolrelay.azet.io/llms.txt) · [MCP](#mcp) · [Add a provider](#add-a-provider-in-one-json-file) · [한국어](README.ko.md)
 
@@ -35,8 +35,8 @@ curl -X POST https://toolrelay.azet.io/v1/call/people.profile.from_email \
 
 | | |
 |---|---|
-| **Ask for the job, not the vendor** | Call `web.scrape`, `people.email.find`, `serp.google`. toolrelay walks every provider you hold a key for, cheapest first. |
-| **Misses are free** | A provider that bills per result and finds nothing costs `$0`, and the next one is tried. You pay for answers, not attempts. |
+| **Name the task, skip the vendor hunt** | Call `web.scrape`, `people.email.find`, `serp.google`. toolrelay walks every provider you hold a key for, cheapest first. |
+| **Pay for answers** | A per-result provider that finds nothing costs `$0`, and the next one is tried. |
 | **Keys never leave the server** | Credentials are injected at the edge. Agents hold one revocable toolrelay key with a prepaid balance. |
 | **Zero servers** | One Worker + one D1 database. Deploys in under a minute, answers from 300+ cities, fits the free plan. |
 | **Agent-native** | MCP endpoint, `llms.txt`, plain HTTP. Point Claude Code, Codex or Cursor at one URL. |
@@ -76,7 +76,7 @@ npx wrangler secret put HUNTER_API_KEY
 | `GET /llms.txt` | Instructions an agent reads once to use the whole catalog. |
 
 Every call answers `{ output, cost_usd, served_by, tried }`. `output` is the provider's response, verbatim:
-toolrelay **relays, it never re-models** the upstream, so it keeps working when a provider changes its schema.
+toolrelay passes the provider's response through untouched, so nothing breaks when a provider changes its schema.
 
 ### Routing rules
 
@@ -104,12 +104,12 @@ Three tools: `search_tools`, `get_tool`, `call_tool`. That is the whole surface;
 | Capability | Providers | Per hit |
 |---|---|---|
 | `people.profile.from_email` | Gravatar | free |
-| `people.email.find` / `people.email.verify` | Hunter | $0.034 / $0.017 |
+| `people.email.find` / `people.email.verify` | Hunter † | $0.034 / $0.017 |
 | `people.search.developers` | GitHub | free |
 | `social.profile.github` / `social.profile.bluesky` | GitHub, Bluesky | free |
 | `web.scrape` | Jina Reader, Firecrawl | free / $0.00083 |
-| `web.search` | Exa | $0.005 |
-| `serp.google` / `keywords.volume` | DataForSEO | $0.002 / $0.075 |
+| `web.search` | Exa † | $0.005 |
+| `serp.google` / `keywords.volume` | DataForSEO † | $0.002 / $0.075 |
 | `ai.judge` | TypeSafe Jev | metered (~$0.00002) |
 | `news.search` | Hacker News | free |
 | `knowledge.summary` | Wikipedia | free |
@@ -117,7 +117,7 @@ Three tools: `search_tools`, `get_tool`, `call_tool`. That is the whole surface;
 | `weather.current` | Open-Meteo | free |
 | `crypto.price` | CoinGecko | free |
 
-Prices are list prices from each provider's public pricing; set `MARKUP` to resell.
+Prices are estimates from each provider's pricing at the time of writing; check before relying on them, and set `MARKUP` to resell. Rows marked † have not been called against the live provider yet.
 
 ## Add a provider in one JSON file
 

@@ -74,6 +74,10 @@ test("a bill:call provider's miss is charged, then the next hit adds on", async 
   assert.deepEqual(r.tried.map((t) => t.cost_usd), [0.005, 0.01]);
 });
 
+test("a non-number max cost is refused, never treated as no cap", async () => {
+  await assert.rejects(call(cat, "people.email.find", { name: "A" }, env, { markup: 0, maxCostUsd: NaN, fetcher: fake({}).f }));
+});
+
 test("isHit", () => {
   assert.equal(isHit({ a: [] }, "a"), false);
   assert.equal(isHit({ a: [1] }, "a.0"), true);
