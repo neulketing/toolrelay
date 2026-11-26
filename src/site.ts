@@ -67,7 +67,7 @@ footer{margin-top:64px;color:var(--mut);font-size:14px}a{color:var(--fg)}
 <div class="demo"><input id="em" value="beau@dentedreality.com.au" aria-label="email"><button id="go">Look up</button></div>
 <pre id="out">POST /v1/call/people.profile.from_email</pre></section>
 
-<section><h2>Why it gets starred</h2><div class="grid">
+<section><h2>Why toolrelay</h2><div class="grid">
 <div class="card"><b>Zero servers</b><p>One Worker, one D1 table. Deploys in a minute on Cloudflare's free plan, answers from 300+ cities.</p></div>
 <div class="card"><b>Misses are free</b><p>Call a capability, not a vendor. toolrelay walks providers cheapest-first and bills only the answer.</p></div>
 <div class="card"><b>Keys stay home</b><p>Provider credentials are injected server-side. Your agents hold one toolrelay key, revocable in one line.</p></div>
