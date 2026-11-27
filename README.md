@@ -9,25 +9,30 @@ Your agent names the task, sees what it costs, and runs it. Provider keys stay o
 
 [**Try the live demo**](https://toolrelay.azet.io) (no signup) · [Deploy your own in 60s](#sixty-seconds-to-your-own) · [Add a provider](#add-a-provider-in-one-json-file) · [한국어](README.ko.md)
 
-[![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#mcp) [![servers](https://img.shields.io/badge/servers-zero-2ea44f)](#sixty-seconds-to-your-own) [![stars](https://img.shields.io/github/stars/neulketing/toolrelay?style=flat&color=ff6b2c)](https://github.com/neulketing/toolrelay/stargazers)
+[![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#mcp) [![servers](https://img.shields.io/badge/servers-zero-2ea44f)](#sixty-seconds-to-your-own)
 
 </div>
 
 ---
 
-Your agent wants to know who is behind an email address. Today that means a Hunter account, an Apollo
-seat, a scraping subscription, three API keys pasted into three `.env` files, and a system prompt that
-hopes the agent picks the right one.
+Your agent wants to know who is behind an email address. Today that means pasting a people-data key, a
+scraper key and a search key into every agent's `.env`, then writing a system prompt that hopes the agent
+picks the right vendor and stops when one comes back empty.
 
-With toolrelay it is one URL and one key:
+With toolrelay the keys live on one server and the agent gets one URL and one key:
 
 <img src="assets/demo.gif" alt="Searching the toolrelay catalog and calling people.profile.from_email on the live demo" width="100%">
 
 Every frame above is real output from [toolrelay.azet.io](https://toolrelay.azet.io). Paste the same
-commands into your terminal and you get the same answer.
+commands and you get the same answer:
+
+```bash
+curl -s -G https://toolrelay.azet.io/v1/catalog --data-urlencode "q=profile from email"
+curl -s -X POST https://toolrelay.azet.io/v1/call/people.profile.from_email -d '{"email":"beau@dentedreality.com.au"}'
+```
 
 > **If this saves you an afternoon of API wiring, [star the repo](https://github.com/neulketing/toolrelay/stargazers).**
-> Stars help the next developer find it. Want a provider next? 👍 its [request](https://github.com/neulketing/toolrelay/issues?q=is%3Aissue+label%3Aprovider).
+> Stars help the next developer find it. Want a provider next? Upvote its [request](https://github.com/neulketing/toolrelay/issues?q=is%3Aissue+label%3Aprovider).
 
 ## Why toolrelay
 
@@ -45,7 +50,7 @@ commands into your terminal and you get the same answer.
 
 | | Wire each API yourself | One MCP server per vendor | toolrelay |
 |---|---|---|---|
-| Keys the agent can see | all of them | all of them | one revocable key |
+| Where provider keys live | every agent's `.env` | every agent machine's MCP config | one server; agents get one revocable key |
 | When a provider is down or empty | your code handles it | the agent retries by hand | next provider, automatically |
 | Price shown before the call | no | rarely | every tool, in the catalog |
 | Spend cap per call / per key | build it | build it | `X-Max-Cost` + prepaid balance |
@@ -109,6 +114,8 @@ Three tools: `search_tools`, `get_tool`, `call_tool`. That is the whole surface;
 
 ## Catalog
 
+Small on purpose today: 17 tools from 14 providers, each one called against the live API before it shipped (except the rows marked †). It grows one JSON file at a time.
+
 | Capability | Providers | Per hit |
 |---|---|---|
 | `people.profile.from_email` | Gravatar | free |
@@ -118,7 +125,7 @@ Three tools: `search_tools`, `get_tool`, `call_tool`. That is the whole surface;
 | `web.scrape` | Jina Reader, Firecrawl | free / $0.00083 |
 | `web.search` | Exa † | $0.005 |
 | `serp.google` / `keywords.volume` | DataForSEO † | $0.002 / $0.075 |
-| `ai.judge` | TypeSafe Jev | metered (~$0.00002) |
+| `ai.judge` | TypeSafe Jev | metered, capped at $0.0005 (a typical call measured $0.000014) |
 | `news.search` | Hacker News | free |
 | `knowledge.summary` | Wikipedia | free |
 | `company.domain.registration` | RDAP | free |
@@ -168,7 +175,7 @@ Yes. MIT, no hosted-service clause. Mint prepaid keys with `/admin/keys` and set
 
 **My provider isn't in the catalog.**
 Add it in one JSON file (below), or [open a provider request](https://github.com/neulketing/toolrelay/issues/new?template=provider.yml).
-Requests with the most 👍 go first.
+Requests with the most upvotes go first.
 
 ## Roadmap
 

@@ -32,7 +32,7 @@ Fork ${REPO}, \`npm run deploy\`, add provider keys with \`wrangler secret put\`
 
 export function landing(cat: Catalog, env: Env, origin: string) {
   const rows = [...cat.endpoints.values()].sort((a, b) => a.capability.localeCompare(b.capability) || a.price_usd - b.price_usd)
-    .map((e) => `<tr><td><code>${esc(e.capability)}</code></td><td>${esc(e.provider_name)}</td><td>${esc(e.summary)}</td><td class="num">${e.price_usd === 0 ? "free" : "$" + e.price_usd}</td></tr>`).join("");
+    .map((e) => `<tr><td><code>${esc(e.capability)}</code></td><td>${esc(e.provider_name)}</td><td>${esc(e.summary)}</td><td class="num">${e.price_usd === 0 ? "free" : (e.cost ? "up to $" : "$") + e.price_usd}</td></tr>`).join("");
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>toolrelay — one key, every tool your agent needs</title>
 <meta name="description" content="Open-source tool gateway for AI agents. Name the task, see what it costs, run it. Runs on your own Cloudflare in one command. MIT.">
@@ -65,7 +65,7 @@ footer{margin-top:64px;color:var(--mut);font-size:14px}a{color:var(--fg)}
 </style></head><body><main>
 <div class="kick">open source · MIT · runs on Cloudflare Workers</div>
 <h1>One key.<br>Every tool your agent needs.</h1>
-<p class="lead">Your agent should not need fourteen signups to look up one person. toolrelay puts every API behind one endpoint: name the task, see what it costs, run it. Provider keys never leave your server. When a provider comes back empty, the next one is tried, and per-result providers charge nothing for the miss.</p>
+<p class="lead">Stop pasting every vendor key into every agent. toolrelay keeps the keys on one server and puts every API behind one endpoint: name the task, see what it costs, run it. Provider keys never leave your server. When a provider comes back empty, the next one is tried, and per-result providers charge nothing for the miss.</p>
 <div class="cta"><a class="btn p" href="${REPO}">Star on GitHub</a><a class="btn" href="${REPO}#sixty-seconds-to-your-own">Self-host in 60s</a><a class="btn" href="/llms.txt">llms.txt</a></div>
 
 <section><h2>Try it — who is behind this email?</h2>
@@ -92,7 +92,7 @@ curl -X POST $URL/v1/call/web.scrape -H "Authorization: Bearer $KEY" -d '{"url":
 <section><h2>Catalog (${cat.endpoints.size} tools, ${cat.capabilities.size} capabilities)</h2>
 <div class="tbl"><table><thead><tr><th>Capability</th><th>Provider</th><th>What it does</th><th class="num">Per hit</th></tr></thead><tbody>${rows}</tbody></table></div></section>
 
-<section><h2>Useful?</h2><p class="lead">Star the repo so the next developer finds it, and 👍 the provider you want next.</p>
+<section><h2>Useful?</h2><p class="lead">Star the repo so the next developer finds it, and upvote the provider you want next.</p>
 <div class="cta"><a class="btn p" href="${REPO}">Star toolrelay on GitHub</a><a class="btn" href="${REPO}/issues/new?template=provider.yml">Request a provider</a></div></section>
 
 <footer>Built by <a href="https://azet.io">AZET</a>. <a href="${REPO}">Source</a> · <a href="/v1/catalog">JSON catalog</a> · <a href="/llms.txt">llms.txt</a> · MCP at <code>${esc(origin)}/mcp</code></footer>

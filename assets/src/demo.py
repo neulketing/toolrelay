@@ -7,7 +7,7 @@ OUT = os.path.join(HERE, "..", "demo.gif")
 B = "https://toolrelay.azet.io"
 SCENES = [
     ("# find a tool by the job, with its price", None),
-    (f'curl -s "{B}/v1/catalog?q=profile from email" | jq -c \'.[0:3][] | {{id, price_usd, ready}}\'',
+    (f'curl -s -G {B}/v1/catalog --data-urlencode "q=profile from email" \\\n  | jq -c \'.[0:3][] | {{id, price_usd, ready}}\'',
      '{"id":"gravatar.profile.from_email","price_usd":0,"ready":true}\n'
      '{"id":"hunter.email.find","price_usd":0.034,"ready":false}\n'
      '{"id":"bluesky.profile.get","price_usd":0,"ready":true}'),

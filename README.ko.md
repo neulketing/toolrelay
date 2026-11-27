@@ -13,7 +13,7 @@
 
 위 화면은 전부 [toolrelay.azet.io](https://toolrelay.azet.io) 의 실제 응답입니다. 같은 명령을 터미널에 붙이면 같은 답이 나옵니다.
 
-> **API 연결에 들일 오후 한나절을 아꼈다면 [별을 눌러 주세요](https://github.com/neulketing/toolrelay/stargazers).** 별은 다음 개발자가 이 저장소를 찾게 해 줍니다. 원하는 업체는 [요청 이슈](https://github.com/neulketing/toolrelay/issues?q=is%3Aissue+label%3Aprovider)에 👍 를 누르면 그 순서로 붙입니다.
+> **API 연결에 들일 오후 한나절을 아꼈다면 [별을 눌러 주세요](https://github.com/neulketing/toolrelay/stargazers).** 별은 다음 개발자가 이 저장소를 찾게 해 줍니다. 원하는 업체는 [요청 이슈](https://github.com/neulketing/toolrelay/issues?q=is%3Aissue+label%3Aprovider)에 추천(+1)을 누르면 그 순서로 붙입니다.
 
 ## 왜 toolrelay 인가
 
