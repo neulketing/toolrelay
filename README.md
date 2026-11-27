@@ -9,7 +9,7 @@ Your agent names the task, sees what it costs, and runs it. Provider keys stay o
 
 [**Try the live demo**](https://toolrelay.azet.io) (no signup) · [Deploy your own in 60s](#sixty-seconds-to-your-own) · [Add a provider](#add-a-provider-in-one-json-file) · [한국어](README.ko.md)
 
-[![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#mcp) [![servers](https://img.shields.io/badge/servers-zero-2ea44f)](#sixty-seconds-to-your-own)
+[![test](https://github.com/neulketing/toolrelay/actions/workflows/test.yml/badge.svg)](https://github.com/neulketing/toolrelay/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#mcp) [![servers](https://img.shields.io/badge/servers-zero-2ea44f)](#sixty-seconds-to-your-own)
 
 </div>
 

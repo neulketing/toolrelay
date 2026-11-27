@@ -16,5 +16,19 @@
   "devDependencies": {
     "wrangler": "^4.155.0",
     "@cloudflare/workers-types": "^5.20261125.1"
-  }
+  },
+  "homepage": "https://toolrelay.azet.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neulketing/toolrelay.git"
+  },
+  "bugs": "https://github.com/neulketing/toolrelay/issues",
+  "keywords": [
+    "mcp",
+    "ai-agents",
+    "tool-gateway",
+    "cloudflare-workers",
+    "llms-txt",
+    "api-gateway"
+  ]
 }
