@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+:root{--bg:#0b0b0c;--fg:#f2f2f0;--mut:#9a9a96;--line:#2c2c31;--card:#131316;--acc:#ff6b2c;--ok:#9ad27a}
+body.light{--bg:#ffffff;--fg:#141414;--mut:#5f5f5a;--line:#e1e1dc;--card:#f7f7f4;--ok:#2f8a3a}
+*{box-sizing:border-box;margin:0}
+body{width:1280px;height:560px;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;position:relative;overflow:hidden}
+.col{position:absolute;top:60px;bottom:60px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.h{font:600 13px "Geist Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;font-size:16px}
+.box small{display:block;color:var(--mut);font:13px "Geist Mono",monospace;margin-top:3px}
+.mid{left:440px;width:400px;top:120px;bottom:120px;border:2px solid var(--acc);border-radius:18px;padding:22px;justify-content:flex-start;gap:12px}
+.mid .t{font-size:24px;font-weight:800;letter-spacing:-.02em}.mid .t span{color:var(--acc)}
+.step{display:flex;gap:12px;align-items:flex-start;font-size:15.5px}
+.step b{flex:none;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#111;font-size:13px;display:grid;place-items:center}
+.step small{display:block;color:var(--mut);font:12.5px "Geist Mono",monospace}
+.pv .box{display:flex;justify-content:space-between;align-items:center;padding:10px 14px}
+.tag{font:12px "Geist Mono",monospace;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px solid var(--line);color:var(--mut)}
+.tag.hit{color:var(--ok);border-color:var(--ok)}
+svg{position:absolute;inset:0}
+</style><script>if(location.hash=="#light")document.addEventListener("DOMContentLoaded",()=>document.body.classList.add("light"))</script></head><body>
+<svg width="1280" height="560"><defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ff6b2c"/></marker></defs>
+<path d="M352 280 L432 280" stroke="#ff6b2c" stroke-width="2.5" marker-end="url(#a)"/>
+<path d="M842 230 L922 212" stroke="#ff6b2c" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#a)"/>
+<path d="M842 280 L922 270" stroke="#ff6b2c" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#a)"/>
+<path d="M842 330 L922 328" stroke="#ff6b2c" stroke-width="2.5" marker-end="url(#a)"/>
+</svg>
+<div class="col" style="left:60px;width:290px"><div class="h">Your agents</div>
+<div class="box">Claude Code · Codex · Cursor<small>MCP: /mcp</small></div>
+<div class="box">Any script or backend<small>HTTP: /v1/call/&lt;task&gt;</small></div>
+<div class="box">One toolrelay key<small>prepaid, revocable</small></div></div>
+<div class="col mid"><div class="t">toolrelay <span>on Cloudflare</span></div>
+<div class="step"><b>1</b><div>Find the tool by task<small>catalog: 1 JSON file per provider</small></div></div>
+<div class="step"><b>2</b><div>Check price against your cap<small>X-Max-Cost + key balance</small></div></div>
+<div class="step"><b>3</b><div>Try providers, cheapest first<small>keys injected server-side</small></div></div>
+<div class="step"><b>4</b><div>Bill only what was spent<small>race-safe debit in D1</small></div></div>
+</div>
+<div class="col pv" style="left:930px;width:290px"><div class="h">Providers for one task</div>
+<div class="box">Cheapest<span class="tag">empty · next</span></div>
+<div class="box">Next<span class="tag">429 · $0 · next</span></div>
+<div class="box">Next<span class="tag hit">hit · billed</span></div>
+<div class="box">+ any API in one JSON file</div></div>
+</body></html>

@@ -1,15 +1,24 @@
 <div align="center">
 
-<img src="assets/hero.png" alt="toolrelay: one key, every tool your agent needs" width="100%">
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.png">
+  <img src="assets/hero.png" alt="toolrelay: one key, every tool your agent needs" width="100%">
+</picture>
 
-# toolrelay
+<h3>The open-source tool gateway for AI agents.</h3>
 
-**The open-source tool gateway for AI agents.**<br>
 Your agent names the task, sees what it costs, and runs it. Provider keys stay on your server.
 
-[**Try the live demo**](https://toolrelay.azet.io) (no signup) · [Deploy your own in 60s](#sixty-seconds-to-your-own) · [Add a provider](#add-a-provider-in-one-json-file) · [한국어](README.ko.md)
+<p>
+<a href="https://toolrelay.azet.io"><b>Live demo</b></a> ·
+<a href="#add-it-to-your-agent-in-one-line">Add to your agent</a> ·
+<a href="#sixty-seconds-to-your-own">Self-host in 60s</a> ·
+<a href="#add-a-provider-in-one-json-file">Add a provider</a> ·
+<a href="https://toolrelay.azet.io/llms.txt">llms.txt</a> ·
+<a href="README.ko.md">한국어</a>
+</p>
 
-[![test](https://github.com/neulketing/toolrelay/actions/workflows/test.yml/badge.svg)](https://github.com/neulketing/toolrelay/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#mcp) [![servers](https://img.shields.io/badge/servers-zero-2ea44f)](#sixty-seconds-to-your-own)
+[![test](https://github.com/neulketing/toolrelay/actions/workflows/test.yml/badge.svg)](https://github.com/neulketing/toolrelay/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#add-it-to-your-agent-in-one-line) [![release](https://img.shields.io/github/v/release/neulketing/toolrelay?color=ff6b2c)](https://github.com/neulketing/toolrelay/releases)
 
 </div>
 
@@ -19,12 +28,33 @@ Your agent wants to know who is behind an email address. Today that means pastin
 scraper key and a search key into every agent's `.env`, then writing a system prompt that hopes the agent
 picks the right vendor and stops when one comes back empty.
 
-With toolrelay the keys live on one server and the agent gets one URL and one key:
+With toolrelay the keys live on one server and the agent gets one URL and one key.
+
+## Add it to your agent in one line
+
+<img src="assets/mcp.gif" alt="Claude Code adds the toolrelay MCP server, searches the catalog and looks up an email for $0" width="100%">
+
+A real Claude Code session against the live demo: it found the tool by task, called it, and reported the cost.
+
+```bash
+# Claude Code
+claude mcp add --transport http toolrelay https://toolrelay.azet.io/mcp
+# Codex
+codex mcp add toolrelay --url https://toolrelay.azet.io/mcp
+```
+
+Cursor and other MCP clients (`~/.cursor/mcp.json`):
+
+```json
+{ "mcpServers": { "toolrelay": { "url": "https://toolrelay.azet.io/mcp" } } }
+```
+
+The demo answers free tools without a key. On your own deployment add `--header "Authorization: Bearer tr_..."`
+(Claude Code) or a `headers` block, and every paid tool you hold a provider key for lights up.
+
+## Or call it over plain HTTP
 
 <img src="assets/demo.gif" alt="Searching the toolrelay catalog and calling people.profile.from_email on the live demo" width="100%">
-
-Every frame above is real output from [toolrelay.azet.io](https://toolrelay.azet.io). Paste the same
-commands and you get the same answer:
 
 ```bash
 curl -s -G https://toolrelay.azet.io/v1/catalog --data-urlencode "q=profile from email"
@@ -33,6 +63,13 @@ curl -s -X POST https://toolrelay.azet.io/v1/call/people.profile.from_email -d '
 
 > **If this saves you an afternoon of API wiring, [star the repo](https://github.com/neulketing/toolrelay/stargazers).**
 > Stars help the next developer find it. Want a provider next? Upvote its [request](https://github.com/neulketing/toolrelay/issues?q=is%3Aissue+label%3Aprovider).
+
+## How it works
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/arch-light.png">
+  <img src="assets/arch.png" alt="Agents call toolrelay over MCP or HTTP with one key; toolrelay finds the tool, checks the price cap, tries providers cheapest first and bills only what was spent" width="100%">
+</picture>
 
 ## Why toolrelay
 

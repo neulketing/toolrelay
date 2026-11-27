@@ -1,4 +1,7 @@
-<img src="assets/hero.png" alt="toolrelay" width="100%">
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.png">
+  <img src="assets/hero.png" alt="toolrelay" width="100%">
+</picture>
 
 # toolrelay
 
@@ -8,6 +11,17 @@
 업체 키는 서버 밖으로 나가지 않고, 결과당 과금 업체는 못 찾으면 0원입니다. Cloudflare 무료 플랜에 명령 한 줄로 올라갑니다.
 
 [**라이브 데모 써 보기**](https://toolrelay.azet.io) (가입 없음) · [English](README.md)
+
+## 에이전트에 한 줄로 붙이기
+
+<img src="assets/mcp.gif" alt="Claude Code 에 toolrelay MCP 를 붙여 이메일 주인을 $0 로 찾는 실제 실행" width="100%">
+
+```bash
+claude mcp add --transport http toolrelay https://toolrelay.azet.io/mcp   # Claude Code
+codex mcp add toolrelay --url https://toolrelay.azet.io/mcp                # Codex
+```
+
+## HTTP 로 바로 부르기
 
 <img src="assets/demo.gif" alt="라이브 데모에서 카탈로그를 찾고 people.profile.from_email 을 부르는 화면" width="100%">
 
@@ -24,6 +38,13 @@
 - **에이전트 기본 탑재** — MCP, `llms.txt`, 일반 HTTP. Claude Code·Codex·Cursor 에 주소 하나만 주면 됩니다.
 - **JSON 파일 하나로 업체 추가** — 주소·파라미터·가격·「찾음」 판정만 적으면 경로에 자동으로 합류합니다.
 - **진짜 오픈** — MIT. 나·팀·고객 누구에게 서비스해도 됩니다.
+
+## 구조
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/arch-light.png">
+  <img src="assets/arch.png" alt="toolrelay 구조" width="100%">
+</picture>
 
 ## 1분 설치
 

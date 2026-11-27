@@ -14,7 +14,9 @@ p{font-size:24px;line-height:1.4;color:#a3a39e}
 .row{display:flex;justify-content:space-between;border-top:1px solid #222226;padding:7px 0}
 .tag{font-size:13px;padding:1px 9px;border-radius:6px}
 .hit{background:rgba(154,210,122,.14);color:#9ad27a}.skip{background:#1f1f23;color:#8a8a85}.miss{background:rgba(127,183,255,.12);color:#7fb7ff}
-</style></head><body><div class="glow"></div>
+body.light{background:#fafaf8;color:#141414}body.light p{color:#5f5f5a}body.light .glow{background:radial-gradient(circle,rgba(255,107,44,.16),transparent 62%)}
+body.light .panel{color:#f2f2f0}body.light .chip{background:#fff;border-color:#e1e1dc;color:#333}
+</style><script>if(location.hash=="#light")document.addEventListener("DOMContentLoaded",()=>document.body.classList.add("light"))</script></head><body><div class="glow"></div>
 <div class="wrap"><div class="kick">toolrelay · open source · MIT</div>
 <h1>One key.<br>Every tool your agent needs.</h1>
 <p>Name the task, see the price, run it. Provider keys stay on your server.</p></div>
