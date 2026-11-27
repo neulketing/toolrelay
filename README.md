@@ -18,7 +18,7 @@ Your agent names the task, sees what it costs, and runs it. Provider keys stay o
 <a href="README.ko.md">한국어</a>
 </p>
 
-[![test](https://github.com/neulketing/toolrelay/actions/workflows/test.yml/badge.svg)](https://github.com/neulketing/toolrelay/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#add-it-to-your-agent-in-one-line) [![release](https://img.shields.io/github/v/release/neulketing/toolrelay?color=ff6b2c)](https://github.com/neulketing/toolrelay/releases)
+[![test](https://github.com/neulketing/toolrelay/actions/workflows/test.yml/badge.svg)](https://github.com/neulketing/toolrelay/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#add-it-to-your-agent-in-one-line) [![release](https://img.shields.io/github/v/release/neulketing/toolrelay?color=ff6b2c)](https://github.com/neulketing/toolrelay/releases) [![Glama](https://glama.ai/mcp/servers/neulketing/toolrelay/badges/score.svg)](https://glama.ai/mcp/servers/neulketing/toolrelay)
 
 </div>
 
