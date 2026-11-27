@@ -1,35 +1,33 @@
 <div align="center">
 
+<img src="assets/hero.png" alt="toolrelay: one key, every tool your agent needs" width="100%">
+
 # toolrelay
 
-### One key. Every tool your agent needs.
+**The open-source tool gateway for AI agents.**<br>
+Your agent names the task, sees what it costs, and runs it. Provider keys stay on your server.
 
-**The open-source tool gateway for AI agents.** Name the task, see what it costs, run it.<br>
-Provider keys stay on your server. You pay for answers. Runs on Cloudflare's free plan in one command.
+[**Try the live demo**](https://toolrelay.azet.io) (no signup) · [Deploy your own in 60s](#sixty-seconds-to-your-own) · [Add a provider](#add-a-provider-in-one-json-file) · [한국어](README.ko.md)
 
-[**Live demo**](https://toolrelay.azet.io) · [llms.txt](https://toolrelay.azet.io/llms.txt) · [MCP](#mcp) · [Add a provider](#add-a-provider-in-one-json-file) · [한국어](README.ko.md)
-
-![license](https://img.shields.io/badge/license-MIT-black) ![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020) ![mcp](https://img.shields.io/badge/MCP-ready-6b4cff) ![servers](https://img.shields.io/badge/servers-zero-2ea44f)
+[![license](https://img.shields.io/badge/license-MIT-black)](LICENSE) [![runtime](https://img.shields.io/badge/runtime-Cloudflare%20Workers-f38020)](https://workers.cloudflare.com) [![mcp](https://img.shields.io/badge/MCP-ready-6b4cff)](#mcp) [![servers](https://img.shields.io/badge/servers-zero-2ea44f)](#sixty-seconds-to-your-own) [![stars](https://img.shields.io/github/stars/neulketing/toolrelay?style=flat&color=ff6b2c)](https://github.com/neulketing/toolrelay/stargazers)
 
 </div>
 
 ---
 
-Your agent wants to look up one person. Today that means a Hunter account, an Apollo seat, a scraping
-subscription, three API keys pasted into three `.env` files, and a prompt that hopes the agent picks the
-right one.
+Your agent wants to know who is behind an email address. Today that means a Hunter account, an Apollo
+seat, a scraping subscription, three API keys pasted into three `.env` files, and a system prompt that
+hopes the agent picks the right one.
 
-**toolrelay replaces all of it with one URL.**
+With toolrelay it is one URL and one key:
 
-```bash
-curl -X POST https://toolrelay.azet.io/v1/call/people.profile.from_email \
-  -d '{"email":"beau@dentedreality.com.au"}'
-```
-```json
-{ "output": { "display_name": "Beau Lebens", "profile_url": "https://gravatar.com/beau", "...": "..." },
-  "cost_usd": 0, "served_by": "gravatar.profile.from_email",
-  "tried": [ { "id": "gravatar.profile.from_email", "outcome": "hit" } ] }
-```
+<img src="assets/demo.gif" alt="Searching the toolrelay catalog and calling people.profile.from_email on the live demo" width="100%">
+
+Every frame above is real output from [toolrelay.azet.io](https://toolrelay.azet.io). Paste the same
+commands into your terminal and you get the same answer.
+
+> **If this saves you an afternoon of API wiring, [star the repo](https://github.com/neulketing/toolrelay/stargazers).**
+> Stars help the next developer find it. Want a provider next? 👍 its [request](https://github.com/neulketing/toolrelay/issues?q=is%3Aissue+label%3Aprovider).
 
 ## Why toolrelay
 
@@ -40,8 +38,18 @@ curl -X POST https://toolrelay.azet.io/v1/call/people.profile.from_email \
 | **Keys never leave the server** | Credentials are injected at the edge. Agents hold one revocable toolrelay key with a prepaid balance. |
 | **Zero servers** | One Worker + one D1 database. Deploys in under a minute, answers from 300+ cities, fits the free plan. |
 | **Agent-native** | MCP endpoint, `llms.txt`, plain HTTP. Point Claude Code, Codex or Cursor at one URL. |
-| **A catalog you can read** | Every provider is one JSON file: URL, params, price, what counts as a hit. No SDK per vendor. |
+| **A catalog you can read** | Every provider is one JSON file: URL, params, price, what counts as a hit. |
 | **Actually open** | MIT. Run it for yourself, your team, or your customers. No hosted-service clause. |
+
+### Three ways to give an agent tools
+
+| | Wire each API yourself | One MCP server per vendor | toolrelay |
+|---|---|---|---|
+| Keys the agent can see | all of them | all of them | one revocable key |
+| When a provider is down or empty | your code handles it | the agent retries by hand | next provider, automatically |
+| Price shown before the call | no | rarely | every tool, in the catalog |
+| Spend cap per call / per key | build it | build it | `X-Max-Cost` + prepaid balance |
+| Adding a provider | new client code | new server to install | one JSON file |
 
 ## Sixty seconds to your own
 
@@ -144,6 +152,36 @@ Save it as `catalog/acme.json`, run `npm test`, open a PR. The new provider join
 route automatically, ordered by price. `auth.type` is `header`, `query` or `basic`; `hit` is a dot path that
 must be non-empty for the call to bill.
 
+## FAQ
+
+**Why not let the agent call each API directly?**
+Then the agent holds every key, and a leaked prompt or log leaks all of them. It also has to know which
+vendor to try first and what to do when one comes back empty. toolrelay keeps the keys server-side and
+makes that ordering a rule instead of a prompt.
+
+**What does it cost to run?**
+The Worker and D1 fit Cloudflare's free plan for personal use. You pay providers directly with your own
+keys; toolrelay adds nothing unless you set `MARKUP` to resell.
+
+**Can I sell access to my deployment?**
+Yes. MIT, no hosted-service clause. Mint prepaid keys with `/admin/keys` and set `MARKUP`.
+
+**My provider isn't in the catalog.**
+Add it in one JSON file (below), or [open a provider request](https://github.com/neulketing/toolrelay/issues/new?template=provider.yml).
+Requests with the most 👍 go first.
+
+## Roadmap
+
+- [x] Capability routing, cheapest first, with per-result and per-call billing
+- [x] Prepaid keys with a race-safe balance, per-call cost cap
+- [x] MCP, `llms.txt`, live demo
+- [ ] More people and company data: Apollo, People Data Labs, Clearbit-style enrichment
+- [ ] More search: Brave, Tavily, Serper
+- [ ] Response cache with a TTL per capability
+- [ ] Usage dashboard per key
+
+[Good first issues](https://github.com/neulketing/toolrelay/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) are free public APIs that need one catalog file each.
+
 ## Security
 
 - Provider keys live only in Worker secrets; responses never echo them.
@@ -154,3 +192,5 @@ must be non-empty for the call to bill.
 ## License
 
 MIT © [AZET](https://azet.io). Built for agents that do real work.
+
+If toolrelay is useful to you, a [star](https://github.com/neulketing/toolrelay/stargazers) is the cheapest way to say so.

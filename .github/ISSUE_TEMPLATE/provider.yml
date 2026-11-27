@@ -1,0 +1,25 @@
+name: Provider request
+description: Ask for a provider or API to be added to the catalog
+title: "Add provider: "
+labels: ["provider"]
+body:
+  - type: input
+    id: name
+    attributes: { label: Provider, placeholder: "Brave Search" }
+    validations: { required: true }
+  - type: input
+    id: docs
+    attributes: { label: API docs URL }
+    validations: { required: true }
+  - type: input
+    id: capability
+    attributes: { label: Which job would it do?, placeholder: "web.search" }
+  - type: textarea
+    id: why
+    attributes: { label: What would your agent use it for? }
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Help
+      options:
+        - label: I can open the PR (one JSON file, see CONTRIBUTING.md)

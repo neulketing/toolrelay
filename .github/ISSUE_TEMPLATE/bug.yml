@@ -1,0 +1,14 @@
+name: Bug
+description: Something returned the wrong thing or broke
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes: { label: What happened, description: "The request you sent and the reply, including the tried line. Remove keys." }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: What you expected }
+  - type: input
+    id: where
+    attributes: { label: Where, placeholder: "live demo / my deployment (commit)" }

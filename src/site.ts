@@ -36,6 +36,11 @@ export function landing(cat: Catalog, env: Env, origin: string) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>toolrelay — one key, every tool your agent needs</title>
 <meta name="description" content="Open-source tool gateway for AI agents. Name the task, see what it costs, run it. Runs on your own Cloudflare in one command. MIT.">
+<meta property="og:title" content="toolrelay: one key, every tool your agent needs">
+<meta property="og:description" content="Open-source tool gateway for AI agents. Name the task, see the price, run it. MCP, llms.txt, Cloudflare Workers. MIT.">
+<meta property="og:image" content="https://raw.githubusercontent.com/neulketing/toolrelay/main/assets/hero.png">
+<meta property="og:url" content="${esc(origin)}">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 :root{--bg:#0b0b0c;--fg:#f2f2f0;--mut:#9a9a96;--line:#26262a;--acc:#ff6b2c;--card:#131316}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#fafaf8;--fg:#141414;--mut:#5f5f5a;--line:#e3e3de;--card:#fff}}
@@ -86,6 +91,9 @@ curl -X POST $URL/v1/call/web.scrape -H "Authorization: Bearer $KEY" -d '{"url":
 
 <section><h2>Catalog (${cat.endpoints.size} tools, ${cat.capabilities.size} capabilities)</h2>
 <div class="tbl"><table><thead><tr><th>Capability</th><th>Provider</th><th>What it does</th><th class="num">Per hit</th></tr></thead><tbody>${rows}</tbody></table></div></section>
+
+<section><h2>Useful?</h2><p class="lead">Star the repo so the next developer finds it, and 👍 the provider you want next.</p>
+<div class="cta"><a class="btn p" href="${REPO}">Star toolrelay on GitHub</a><a class="btn" href="${REPO}/issues/new?template=provider.yml">Request a provider</a></div></section>
 
 <footer>Built by <a href="https://azet.io">AZET</a>. <a href="${REPO}">Source</a> · <a href="/v1/catalog">JSON catalog</a> · <a href="/llms.txt">llms.txt</a> · MCP at <code>${esc(origin)}/mcp</code></footer>
 </main>
